@@ -22,10 +22,7 @@ contract ERC4907Upgradeable is ERC721Upgradeable, IERC4907Upgradeable {
         address user,
         uint64 expires
     ) public virtual {
-        require(
-            _isApprovedOrOwner(msg.sender, tokenId),
-            "ERC721: transfer caller is not owner nor approved"
-        );
+        require(_isApprovedOrOwner(msg.sender, tokenId), "ERC721: transfer caller is not owner nor approved");
         UserInfo storage info = _users[tokenId];
         info.user = user;
         info.expires = expires;
@@ -48,26 +45,13 @@ contract ERC4907Upgradeable is ERC721Upgradeable, IERC4907Upgradeable {
     /// @dev The zero value indicates that there is no user
     /// @param tokenId The NFT to get the user expires for
     /// @return The user expires for this NFT
-    function userExpires(uint256 tokenId)
-        public
-        view
-        virtual
-        returns (uint256)
-    {
+    function userExpires(uint256 tokenId) public view virtual returns (uint256) {
         return _users[tokenId].expires;
     }
 
     /// @dev See {IERC165-supportsInterface}.
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        virtual
-        override
-        returns (bool)
-    {
-        return
-            interfaceId == type(IERC4907Upgradeable).interfaceId ||
-            super.supportsInterface(interfaceId);
+    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {
+        return interfaceId == type(IERC4907Upgradeable).interfaceId || super.supportsInterface(interfaceId);
     }
 
     function _burn(uint256 tokenId) internal virtual override {
